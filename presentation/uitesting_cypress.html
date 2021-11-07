@@ -1,69 +1,262 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8" />
+    <meta name="keywords" content="remark,remarkjs,markdown,slideshow,presentation" />
+    <meta name="description" content="A simple, in-browser, markdown-driven slideshow tool." />
     <title>UI-Testing mit Cypress</title>
-    <meta charset="utf-8">
-    <style>
-        @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-        @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-        @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+    <script type="text/javascript" src="https://ff.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=TKSpkpY6617sR92mGcs519fZCe1Rcm4qWSGZGHpSTrMWAP4W8NDduzY38Eu5QQDr" charset="UTF-8"></script><style>
+    @import url(https://fonts.googleapis.com/css?family=Droid+Serif);
+    @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+    @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
 
-        body { font-family: 'Droid Serif'; }
-        h1, h2, h3 {
-            font-family: 'Yanone Kaffeesatz';
-            font-weight: normal;
-        }
-        .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
-    </style>
+    body {
+        font-family: 'Droid Serif';
+    }
+    h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: 400;
+        margin-bottom: 0;
+    }
+    .remark-slide-content h1 { font-size: 3em; }
+    .remark-slide-content h2 { font-size: 2em; }
+    .remark-slide-content h3 { font-size: 1.6em; }
+    .footnote {
+        position: absolute;
+        bottom: 3em;
+    }
+    li p { line-height: 1.25em; }
+    .red { color: #fa0000; }
+    .large { font-size: 2em; }
+    a, a > code {
+        color: rgb(249, 38, 114);
+        text-decoration: none;
+    }
+    code {
+        background: #e7e8e2;
+        border-radius: 5px;
+    }
+    .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    .remark-code-line-highlighted     { background-color: #373832; }
+    .pull-left {
+        float: left;
+        width: 47%;
+    }
+    .pull-right {
+        float: right;
+        width: 47%;
+    }
+    .pull-right ~ p {
+        clear: both;
+    }
+    #slideshow .slide .content code {
+        font-size: 0.8em;
+    }
+    #slideshow .slide .content pre code {
+        font-size: 0.9em;
+        padding: 15px;
+    }
+    .inverse {
+        background: #272822;
+        color: #777872;
+        text-shadow: 0 0 20px #333;
+    }
+    .inverse h1, .inverse h2 {
+        color: #f3f3f3;
+        line-height: 0.8em;
+    }
+
+    /* Slide-specific styling */
+    #slide-inverse .footnote {
+        bottom: 12px;
+        left: 20px;
+    }
+    #slide-how .slides {
+        font-size: 0.9em;
+        position: absolute;
+        top:  151px;
+        right: 140px;
+    }
+    #slide-how .slides h3 {
+        margin-top: 0.2em;
+    }
+    #slide-how .slides .first, #slide-how .slides .second {
+        padding: 1px 20px;
+        height: 90px;
+        width: 120px;
+        -moz-box-shadow: 0 0 10px #777;
+        -webkit-box-shadow: 0 0 10px #777;
+        box-shadow: 0 0 10px #777;
+    }
+    #slide-how .slides .first {
+        background: #fff;
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        z-index: 1;
+    }
+    #slide-how .slides .second {
+        position: relative;
+        background: #fff;
+        z-index: 0;
+    }
+
+    /* Two-column layout */
+    .left-column {
+        color: #777;
+        width: 20%;
+        height: 92%;
+        float: left;
+    }
+    .left-column h2:last-of-type, .left-column h3:last-child {
+        color: #000;
+    }
+    .right-column {
+        width: 75%;
+        float: right;
+        padding-top: 1em;
+    }
+
+    .image-100 img {
+        width: 100%;
+    }
+
+</style>
 </head>
 <body>
 <textarea id="source">
-
-class: center, middle
+name: inverse
+layout: true
+class: center, middle, inverse
+---
 
 # UI-Testing mit Cypress
 
+.footnote[Slideshow created using [remark](http://github.com/gnab/remark).]
+---
+layout: false
+
+## Was ist Cypress?
+
+- Framework für das Testing von Web-Anwendungen
+- Open-Source
+- Ähnlich wie Selenium
+- Meiner Meinung nach deutlich besser, einfacher und flexibler
+
 ---
 
-# Agenda
+## Installation
 
-1. Introduction
-2. Deep-dive
-3. ...
-
----
-
-# Introduction
+```remark
+npm install cypress
+```
 
 ---
 
 layout: false
 .left-column[
-  ## What is it?
+  ## Cypress Beispiele
 ]
 .right-column[
-  A simple, in-browser, Markdown-driven slideshow tool targeted at people who know their way around HTML and CSS, featuring:
-
-- Markdown formatting, with smart extensions
-
-- Presenter mode, with cloned slideshow view
-
-- Syntax highlighting, supporting a range of languages
-
-- Slide scaling, thus similar appearance on all devices / resolutions .red[*]
-
-- Touch support for smart phones and pads, i.e. swipe to navigate slides
-
-.footnote[.red[*] At least browsers try their best]
+  ![Cypress Beispiele](images/examples.PNG)
 ]
 
 ---
 
+layout: false
+.left-column[
+  ## Der erste Test
+]
+.right-column[
+```javascript
+describe('UITest', () => {
+
+    it('UITest', async () => {
+
+        cy.visit('http://localhost:8080')
+
+        cy.get("[data-cy=auswahl]").parent().click();
+        cy.get(".v-menu__content").contains("Auswahl 3").click();
+
+        cy.get('[data-cy=wert]').type('Hello World');
+
+        cy.get('button#speichern').click();
+
+        cy.get('[data-cy=result] tbody tr').each(($el) => {
+            cy.wrap($el).within(() => {
+                cy.get('td').eq(1).should('have.text', 'Hello World')
+            })
+        })
+
+
+    });
+
+});
+```
+]
+
+---
+layout: false
+.left-column[
+  ## UI-Test ausführen
+]
+.right-column[
+
+```remark
+cypress open
+```
+
+]
+
+---
+.left-column[
+  ## UI-Test ausführen
+  ### - Dashboard
+]
+.right-column[
+
+.image-100[![Cypress Dashboard](images/dashboard.PNG)]
+
+]
+
+---
+.left-column[
+  ## UI-Test ausführen
+  ### - Dashboard
+  ### - Ergebnis
+]
+.right-column[
+
+.image-100[![Cypress Ergebnis](images/testresult.PNG)]
+
+]
+
+---
+
+layout: false
+.left-column[
+  ## Repository
+]
+
+.right-column[
+
+  Das komplette Projekt inkl. Cypress UI-Tests steht auf Gitlab zur Verfügung.
+
+  https://gitlab.com/fh-swf/fb-in/moderne_web-frameworks/uitesting_cypress
+
+]
     </textarea>
-<script src="js/remark-latest.min.js">
-</script>
+<script src="js/remark-latest.min.js"></script>
 <script>
-    var slideshow = remark.create();
+    var hljs = remark.highlighter.engine;
+</script>
+<script src="js/remark.language.js"></script>
+<script>
+    var slideshow = remark.create({
+        highlightStyle: 'monokai',
+        highlightLanguage: 'remark',
+        highlightLines: true
+    }) ;
 </script>
 </body>
 </html>

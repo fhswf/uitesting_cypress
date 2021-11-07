@@ -14,7 +14,7 @@
 
       <v-container>
 
-        <v-form>
+        <v-form @submit.prevent="onSubmit">
 
           <v-row justify="center" no-gutters="true">
 
@@ -22,7 +22,10 @@
 
               <v-select id="auswahl"
                         label="Auswahl"
-                        filled>
+                        :items="options"
+                        v-model="current.auswahl"
+                        filled
+                        data-cy="auswahl">
               </v-select>
 
             </v-col>
@@ -35,7 +38,9 @@
 
               <v-text-field id="wert"
                             label="Wert"
-                            filled>
+                            v-model="current.wert"
+                            filled
+                            data-cy="wert">
               </v-text-field>
 
             </v-col>
@@ -46,9 +51,19 @@
 
             <v-col md="4">
 
-              <v-btn type="submit" color="primary">Speichern</v-btn>
+              <v-btn type="submit"
+                     id="speichern"
+                     color="primary"
+                     data-cy="speichern">
+                Speichern
+              </v-btn>
 
-              <v-btn color="primary" class="ml-4">Abbrechen</v-btn>
+              <v-btn color="primary"
+                     class="ml-4"
+                     @click="onCancel"
+                     data-cy="abbrechen">
+                Abbrechen
+              </v-btn>
 
             </v-col>
 
@@ -67,9 +82,10 @@
                           :items="examples"
                           :footer-props="{
                             'items-per-page-text': 'Einträge pro Seite'
-                          }">
+                          }"
+                          data-cy="result">
 
-              <template v-slot:item.Aktionen="{ }">
+              <template v-slot:item.Aktionen="{ item }">
 
                 <v-btn
                     class="light-blue white--text my-2"
@@ -77,6 +93,7 @@
                     rounded
                     fab
                     small
+                    @click="onEdit(item)"
                 >
                   <v-icon class="white--text">mdi-pencil</v-icon>
                 </v-btn>
@@ -87,6 +104,7 @@
                     rounded
                     fab
                     small
+                    @click="onDelete(item)"
                 >
                   <v-icon class="white--text">mdi-delete</v-icon>
                 </v-btn>
@@ -108,9 +126,20 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { Example } from './models/Example';
+//import { v4 as uuidv4 } from 'uuid';
 
 @Component
 export default class App extends Vue {
+
+  private options: string[] = [
+      'Auswahl 1',
+      'Auswahl 2',
+      'Auswahl 3',
+      'Auswahl 4',
+      'Auswahl 5'
+  ];
+
+  private current: Example = { auswahl: '', wert: '' };
 
   private columns: any = [
     {
@@ -132,10 +161,38 @@ export default class App extends Vue {
     super();
 
     this.examples = [];
+    /*
     this.examples.push({
       auswahl: 'Test',
       wert: 'Test'
     });
+    */
+
+  }
+
+  private onSubmit(): void {
+
+    this.examples.push(this.current);
+
+    this.current = { auswahl: '', wert: '' };
+
+  }
+
+  private onCancel(): void {
+
+    this.current = { auswahl: '', wert: '' };
+
+  }
+
+  private onEdit(item: Example): void {
+
+    this.current = item;
+
+  }
+
+  private onDelete(item: Example): void {
+
+    //this.examples.
 
   }
 
